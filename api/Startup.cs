@@ -18,6 +18,7 @@ using SimpleInjector.Integration.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Swashbuckle.AspNetCore.Swagger;
+using funda.api.Security;
 
 namespace api
 {
@@ -41,6 +42,9 @@ namespace api
 			services.AddSwaggerGen(c =>
 			{
 				c.SwaggerDoc("v1", new Info { Title = "Funda.Api", Version = "v1" });
+
+				// Add operation filter that tells swagger UI to ask for authentication when submitting a request.
+				c.OperationFilter<AuthorizationHeaderParameterOperationFilter>();
 			});
 
 			// integrate SimpleInjector with the ASP.Net pipeline

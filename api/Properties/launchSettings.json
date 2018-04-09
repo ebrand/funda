@@ -4,11 +4,13 @@
 			"commandName": "Project",
 			"launchBrowser": true,
 			"launchUrl": "api/posts/1",
-			"environmentVariables": {
-				"ASPNETCORE_ENVIRONMENT": "Development",
-				"USE_FAKE_DATA": "true",
-				"LOG_LEVEL": "Trace"
-			},
+									"environmentVariables": {
+										"ASPNETCORE_ENVIRONMENT": "Development",
+										"USE_FAKE_DATA": "true",
+										"LOG_LEVEL": "Trace",
+										"API_USERNAME": "funda-api",
+										"API_PASSWORD": "@tl@sis@p@in"
+									},
 			"applicationUrl": "http://localhost:12850/"
 		}
 	}

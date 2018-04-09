@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using funda.api.Security;
 using funda.common.logging;
 using funda.model;
 using funda.repository;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
 {
+	[BasicAuthentication]
 	[Produces("application/json")]
 	[Route("api/posts")]
     public class PostsController : Controller
