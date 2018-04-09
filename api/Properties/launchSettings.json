@@ -1,0 +1,15 @@
+{
+	"profiles": {
+		"funda.api": {
+			"commandName": "Project",
+			"launchBrowser": true,
+			"launchUrl": "api/posts/1",
+			"environmentVariables": {
+				"ASPNETCORE_ENVIRONMENT": "Development",
+				"USE_FAKE_DATA": "true",
+				"LOG_LEVEL": "Trace"
+			},
+			"applicationUrl": "http://localhost:12850/"
+		}
+	}
+}

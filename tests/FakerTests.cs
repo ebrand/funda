@@ -4,11 +4,10 @@ using SimpleInjector;
 using funda.model;
 using funda.repository.strategies;
 using funda.repository;
-using funda.repository.mongo;
-using funda.repository.mongo.strategies;
 using funda.common.logging;
 using funda.repository.fake;
 using funda.repository.fake.strategies;
+using System.Threading.Tasks;
 
 namespace funda.tests
 {
@@ -17,12 +16,12 @@ namespace funda.tests
 		private readonly Container _siContainer = new Container();
 
 		[Fact]
-		public async void FakerWorks()
+		public async Task FakerWorks()
 		{
 			// ARRANGE
 			// ### SimpleInjector DI container
-			_siContainer.Register(typeof(IFundaLogger<>), typeof(MicrosoftLogger<>));
-			_siContainer.Register(typeof(IAsyncRepository<>), typeof(FakeAsyncRepository));
+			_siContainer.Register(typeof(IFundaLogger<>), typeof(FundaMicrosoftLogger<>));
+			_siContainer.Register(typeof(IAsyncRepository<>), typeof(FakeAsyncRepository_Post));
 			_siContainer.Register(typeof(IStrategyFactory<>), typeof(StrategyFactory<>));
 
 			// ### These feed a specific strategy factory and CRUD strategies into the above strategy factory

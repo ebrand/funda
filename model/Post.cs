@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using funda.common.auditing;
+using HeyRed.MarkdownSharp;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -32,7 +33,10 @@ namespace funda.model
 		public string Preamble { get; set; }
 
 		[JsonProperty("body")]
-		public string Body { get; set; }
+		public string BodyMarkdown { get; set; }
+
+		[JsonProperty("body-as-html")]
+		public string BodyAsHtml => new Markdown().Transform(this.BodyMarkdown);
 
 		[JsonProperty("author")]
 		public string Author { get; set; }

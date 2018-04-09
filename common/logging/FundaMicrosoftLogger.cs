@@ -3,11 +3,16 @@ using Microsoft.Extensions.Logging;
 
 namespace funda.common.logging
 {
-    public class MicrosoftLogger<T> : IFundaLogger<T>
+    public class FundaMicrosoftLogger<T> : IFundaLogger<T>
     {
         private readonly ILogger<T> _logger;
 
-        public void LogDebug(int eventId, string message, Exception exception = null)
+		public FundaMicrosoftLogger()
+		{
+			_logger = ApplicationLogging.CreateLogger<T>();
+		}
+
+		public void LogDebug(int eventId, string message, Exception exception = null)
         {
             _logger.LogDebug(new EventId(eventId), exception, message);
         }

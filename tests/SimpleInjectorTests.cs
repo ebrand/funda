@@ -19,7 +19,7 @@ namespace funda.tests
 		{
 			// ARRANGE
 			// ### SimpleInjector DI container
-			_siContainer.Register(typeof(IFundaLogger<>), typeof(MicrosoftLogger<>));
+			_siContainer.Register(typeof(IFundaLogger<>), typeof(FundaMicrosoftLogger<>));
 			_siContainer.Register(typeof(IAsyncRepository<>), typeof(MongoAsyncRepository<>));
 			_siContainer.Register(typeof(IStrategyFactory<>), typeof(StrategyFactory<>));
 

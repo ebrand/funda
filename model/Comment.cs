@@ -1,4 +1,5 @@
 ﻿using System;
+using HeyRed.MarkdownSharp;
 using Newtonsoft.Json;
 
 namespace funda.model
@@ -11,8 +12,11 @@ namespace funda.model
 		[JsonProperty("author")]
 		public string Author { get; set; }
 
-		[JsonProperty("body")]
-		public string Body { get; set; }
+		[JsonProperty("body-as-markdown")]
+		public string BodyMarkdown { get; set; }
+
+		[JsonProperty("body-as-html")]
+		public string BodyAsHtml => new Markdown().Transform(this.BodyMarkdown);
 
 		[JsonProperty("like-count")]
 		public int LikeCount { get; set; }

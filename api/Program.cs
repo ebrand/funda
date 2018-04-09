@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace api
@@ -17,9 +12,24 @@ namespace api
             BuildWebHost(args).Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .Build();
-    }
+		public static IWebHost BuildWebHost(string[] args)
+		{
+			var logLevel = LogLevel.Trace;
+			var logLevelFromEnv = Environment.GetEnvironmentVariable("LOG_LEVEL");
+
+			if (!string.IsNullOrEmpty(logLevelFromEnv))
+				Enum.TryParse(logLevelFromEnv, true, out logLevel);
+
+			var host = new WebHostBuilder()
+				.UseKestrel()
+				.UseContentRoot(Directory.GetCurrentDirectory())
+				.ConfigureLogging((hostingContext, logging) =>
+					{
+						logging.AddConsole().SetMinimumLevel(logLevel);
+					})
+				.UseStartup<Startup>()
+				.Build();
+			return host;
+		}
+	}
 }
