@@ -1,0 +1,26 @@
+{
+	"folders": [
+		{
+			"path": "api"
+		},
+		{
+			"path": "common"
+		},
+		{
+			"path": "model",
+			"name": "model"
+		},
+		{
+			"path": "repository",
+			"name": "repository"
+		},
+		{
+			"path": "repository.mongo",
+			"name": "repository.mongo"
+		},
+		{
+			"path": "web",
+			"name": "web"
+		}
+	]
+}

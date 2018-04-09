@@ -1,0 +1,13 @@
+﻿using System;
+using funda.common;
+
+namespace funda.repository.strategies
+{
+	public interface IAsyncRepositoryStrategyFactory<T>
+	{
+		ICreateStrategy<T> Create { get; set; }
+		IReadStrategy<T>   Read   { get; set; }
+		IUpdateStrategy<T> Update { get; set; }
+		IDeleteStrategy<T> Delete { get; set; }
+	}
+}

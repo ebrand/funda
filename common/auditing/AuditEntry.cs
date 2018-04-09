@@ -1,0 +1,24 @@
+using System;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+namespace funda.common.auditing
+{
+    public class AuditEntry : IAuditEntry
+    {
+        public DateTime AuditDateTime { get; set; }
+        
+        [JsonConverter(typeof(StringEnumConverter))]
+        public AuditType AuditType { get; set; }
+        public string AuditMessage { get; set; }
+        public string AuditActor { get; set; }
+
+        public AuditEntry(DateTime dateTime, AuditType type, string message, string actor)
+        {
+            this.AuditDateTime = dateTime;
+            this.AuditType = type;
+            this.AuditMessage = message;
+            this.AuditActor = actor;
+        }
+    }
+}

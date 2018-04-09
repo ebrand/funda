@@ -1,0 +1,26 @@
+using System;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+namespace funda.repository
+{
+    public class AsyncResponse<T> : IAsyncResponse<T>
+    {
+        public string Message { get; set; }
+        
+        public T Payload { get; set; }       
+        
+        [JsonConverter(typeof(StringEnumConverter))]
+        public AsyncResponseType ResponseType { get; set; }
+        
+        public long TimingInMs { get; set; }
+
+        public AsyncResponse(T payload, AsyncResponseType responseType, long timingInMs, string message = "")
+        {
+            this.Message = message;
+            this.Payload = payload;
+            this.ResponseType = responseType;
+            this.TimingInMs = timingInMs;
+        }
+    }
+}
