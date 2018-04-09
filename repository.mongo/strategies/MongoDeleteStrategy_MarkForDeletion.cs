@@ -9,7 +9,7 @@ using MongoDB.Driver;
 
 namespace funda.repository.mongo.strategies
 {
-	public class MongoDeleteStrategy_Normal<T> : IDeleteStrategy<T> where T : IAuditable
+	public class MongoDeleteStrategy_MarkForDeletion<T> : IDeleteStrategy<T> where T : IAuditable
 	{
 		public async Task<AsyncResponse<T>> DeleteAsync(T obj, object collection)
 		{

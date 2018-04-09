@@ -9,18 +9,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
-    <PackageReference Include="simpleinjector" Version="4.1.1" />
-  </ItemGroup>
-
-  <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\common\common.csproj" />
-    <ProjectReference Include="..\repository\repository.csproj" />
-    <ProjectReference Include="..\repository.mongo\repository.mongo.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+    <PackageReference Include="SimpleInjector.Integration.AspNetCore.Mvc" Version="4.1.1" />
   </ItemGroup>
-
+  <ItemGroup>
+    <ProjectReference Include="..\common\funda.common.csproj" />
+    <ProjectReference Include="..\model\funda.model.csproj" />
+    <ProjectReference Include="..\repository\funda.repository.csproj" />
+    <ProjectReference Include="..\repository.mongo\funda.repository.mongo.csproj" />
+  </ItemGroup>
 </Project>

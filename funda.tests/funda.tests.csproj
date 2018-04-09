@@ -10,6 +10,17 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0-preview-20170628-02" />
     <PackageReference Include="xunit" Version="2.2.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
+    <PackageReference Include="SimpleInjector.Integration.AspNetCore.Mvc" Version="4.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\common\funda.common.csproj" />
+    <ProjectReference Include="..\model\funda.model.csproj" />
+    <ProjectReference Include="..\repository\funda.repository.csproj" />
+    <ProjectReference Include="..\repository.mongo\funda.repository.mongo.csproj" />
+    <ProjectReference Include="..\web\funda.web.csproj" />
+    <ProjectReference Include="..\funda.cli\funda.cli.csproj" />
+    <ProjectReference Include="..\api\funda.api.csproj" />
+    <ProjectReference Include="..\funda.repository.fake\funda.repository.fake.csproj" />
+  </ItemGroup>
 </Project>

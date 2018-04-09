@@ -3,8 +3,10 @@ using System.Collections.Generic;
 
 namespace funda.common.auditing
 {
-    public interface IAuditable
+	public interface IAuditable
     {
-        List<IAuditEntry> AuditEntries { get; set; }
+		int Identifier { get; set; }
+		bool DeleteFlag { get; set; }
+        List<AuditEntry> AuditEntries { get; set; }
     }
 }

@@ -9,7 +9,7 @@ using MongoDB.Driver;
 
 namespace funda.repository.mongo.strategies
 {
-	public class MongoDeleteStrategy_MarkForDeletion<T> : IDeleteStrategy<T> where T : IAuditable
+	public class MongoDeleteStrategy_Normal<T> : IDeleteStrategy<T> where T : IAuditable
 	{
 		public async Task<AsyncResponse<T>> DeleteAsync(T obj, object collection)
 		{
@@ -19,18 +19,15 @@ namespace funda.repository.mongo.strategies
 				new BsonElement("identifier", new BsonString($"{obj.Identifier.ToString()}"))
 			);
 
-			obj.DeleteFlag = true;
-			Utilities.AddDeleteAudit(obj);
-
 			sw.Start();
-			var result = await mongoCollection.UpdateOneAsync(filter, obj.ToBsonDocument());
+			var result = await mongoCollection.DeleteOneAsync(filter);
 			sw.Stop();
 
 			return new AsyncResponse<T>(
 				payload      : obj,
 				responseType : AsyncResponseType.Success,
 				timingInMs   : sw.ElapsedMilliseconds,
-				message      : $"Ack: {result.IsAcknowledged.ToString()}. Object {obj.Identifier.ToString()} marked for deletion."
+				message      : $"Ack: {result.IsAcknowledged.ToString()}. Object {obj.Identifier.ToString()} permanently deleted."
 			);
 		}
 	}

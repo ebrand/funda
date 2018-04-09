@@ -1,51 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using funda.common;
 using funda.common.auditing;
-using funda.common.logging;
+using funda.repository.strategies;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace funda.repository.mongo
 {
-	public class MongoUpdateStrategy_Normal<T> : IUpdateStrategy<T> where T : IIdentifiable, IAuditable
+	public class MongoUpdateStrategy_Normal<T> : IUpdateStrategy<T> where T : IAuditable
 	{
-		public async Task<AsyncResponse<T>> UpdateAsync(T obj, object collection, IFundaLogger<T> logger)
+		public async Task<AsyncResponse<T>> UpdateAsync(T obj, object collection)
 		{
-			try
-			{
-				Utilities.AddUpdateAudit(obj);
+			var sw = new Stopwatch();
+			var mongoCollection = collection as IMongoCollection<BsonDocument>;
+			var filter = new BsonDocument(
+				new BsonElement("identifier", new BsonString($"{obj.Identifier}"))
+			);
 
-				var filter = new BsonDocument(
-					new BsonElement("identifier", new BsonString($"{obj.Identifier}"))
-				);
+			Utilities.AddUpdateAudit(obj);
 
-				var sw = new Stopwatch();
-				sw.Start();
-				var result = await (collection as IMongoCollection<BsonDocument>).ReplaceOneAsync(filter, obj.ToBsonDocument());
-				sw.Stop();
-				var ack = result.IsAcknowledged;
-				var modifiedCount = result.ModifiedCount;
-				var timing = sw.ElapsedMilliseconds;
-				return new AsyncResponse<T>(
-					payload      : obj,
-					responseType : AsyncResponseType.Success,
-					timingInMs   : timing,
-					message      : $"Ack: {ack.ToString()}, Modified count: {modifiedCount.ToString()}"
-				);
-			}
-			catch(Exception exc)
-			{
-				logger.LogError(common.logging.Events.Repository.Update.Failure, exc.Message, exc);
-				return new AsyncResponse<T>(
-					payload      : obj,
-					responseType : AsyncResponseType.Failure,
-					timingInMs   : 0,
-					message      : exc.Message
-				);
-			}
+			sw.Start();
+			var result = await mongoCollection.ReplaceOneAsync(filter, obj.ToBsonDocument());
+			sw.Stop();
+
+			return new AsyncResponse<T>(
+				payload      : obj,
+				responseType : AsyncResponseType.Success,
+				timingInMs   : sw.ElapsedMilliseconds,
+				message      : $"Ack: {result.IsAcknowledged.ToString()}, Modified count: {result.ModifiedCount.ToString()}"
+			);
 		}
 	}
 }

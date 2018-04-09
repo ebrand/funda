@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <RootNamespace>funda.web</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

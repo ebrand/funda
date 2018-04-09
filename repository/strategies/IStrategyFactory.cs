@@ -3,7 +3,7 @@ using funda.common;
 
 namespace funda.repository.strategies
 {
-	public interface IAsyncRepositoryStrategyFactory<T>
+	public interface IStrategyFactory<T>
 	{
 		ICreateStrategy<T> Create { get; set; }
 		IReadStrategy<T>   Read   { get; set; }

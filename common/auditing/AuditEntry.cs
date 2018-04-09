@@ -4,7 +4,7 @@ using Newtonsoft.Json.Converters;
 
 namespace funda.common.auditing
 {
-    public class AuditEntry : IAuditEntry
+    public class AuditEntry
     {
         public DateTime AuditDateTime { get; set; }
         
@@ -13,7 +13,9 @@ namespace funda.common.auditing
         public string AuditMessage { get; set; }
         public string AuditActor { get; set; }
 
-        public AuditEntry(DateTime dateTime, AuditType type, string message, string actor)
+		public AuditEntry()
+		{}
+		public AuditEntry(DateTime dateTime, AuditType type, string message, string actor)
         {
             this.AuditDateTime = dateTime;
             this.AuditType = type;
