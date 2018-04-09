@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 
-namespace funda.api.Security
+namespace funda.api.security
 {
 	public class BasicAuthenticationAttribute : ActionFilterAttribute
 	{

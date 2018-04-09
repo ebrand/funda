@@ -16,7 +16,7 @@ namespace funda.repository.mongo.strategies
 			var sw = new Stopwatch();
 			var mongoCollection = collection as IMongoCollection<BsonDocument>;
 
-			Utilities.AddCreateAudit(obj);
+			Utilities.Auditing.AddCreateAudit(obj);
 
 			sw.Start();
 			await mongoCollection.InsertOneAsync(obj.ToBsonDocument());

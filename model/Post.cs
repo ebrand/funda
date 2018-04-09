@@ -33,10 +33,10 @@ namespace funda.model
 		public string Preamble { get; set; }
 
 		[JsonProperty("body")]
-		public string BodyMarkdown { get; set; }
+		public string BodyAsMarkdown { get; set; }
 
 		[JsonProperty("body-as-html")]
-		public string BodyAsHtml => new Markdown().Transform(this.BodyMarkdown);
+		public string BodyAsHtml => new Markdown().Transform(this.BodyAsMarkdown);
 
 		[JsonProperty("author")]
 		public string Author { get; set; }

@@ -4,7 +4,7 @@ using System.Linq;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace funda.api.Security
+namespace funda.api.security
 {
 	public class AuthorizationHeaderParameterOperationFilter : IOperationFilter
 	{

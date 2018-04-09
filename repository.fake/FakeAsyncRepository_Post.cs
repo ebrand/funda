@@ -1,14 +1,16 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using Bogus;
+using Bogus.Extensions;
+using funda.common.auditing;
+using funda.common.logging;
 using funda.model;
 using funda.repository.strategies;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using funda.common.logging;
-using Bogus;
-using funda.common.auditing;
-using System.Linq;
-using Bogus.Extensions;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace funda.repository.fake
 {
@@ -18,45 +20,32 @@ namespace funda.repository.fake
 		private readonly IFundaLogger<Post> _logger;
 		public IStrategyFactory<Post> StrategyFactory { get; private set; }
 
-		public Task<AsyncResponse<Post>> CreateAsync(Post obj)
-		{
-			throw new NotImplementedException();
-		}
-
-		public async Task<AsyncResponse<Post>> ReadAsync(int id)
-		{
-			try
-			{
-				_logger.LogInfo(Events.Repository.Read.InProgress, $"Retrieving object ID:{id.ToString()}...");
-				return await this.StrategyFactory.Read.ReadAsync(id, _collection);
-			}
-			catch(Exception exc)
-			{
-				_logger.LogError(
-					eventId: Events.Repository.Read.Failure,
-					message: $"Failed to retrieve object {id.ToString()}.",
-					exception: exc
-				);
-				throw;
-			}
-		}
-
-		public Task<AsyncResponse<Post>> UpdateAsync(Post obj)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Task<AsyncResponse<Post>> DeleteAsync(Post obj)
-		{
-			throw new NotImplementedException();
-		}
-
 		public FakeAsyncRepository_Post(IStrategyFactory<Post> strategyFactory, IFundaLogger<Post> logger)
 		{
 			_logger = logger;
 			this.StrategyFactory = strategyFactory;
-		}
 
+			_logger = logger;
+			if (_collection == null)
+				_collection = new List<Post>();
+
+			// if this fake repository is constructed vi the DI container, it will
+			// create an initial 1,000 fake posts by deserializing them from a
+			// local file ("1000posts.min.json"). Subsequently calling the
+			// "Initialize()" method manually will replace these default
+			// customers with the provided arbitrary number of customers created
+			// using Faker (Bogus).
+			using (StreamReader file = File.OpenText(@"FakeData/1000posts.min.json"))
+			{
+				JsonSerializer serializer = new JsonSerializer();
+				var sw = new Stopwatch();
+				sw.Start();
+				_collection = ((Post[])serializer.Deserialize(file, typeof(Post[]))).ToList();
+				sw.Stop();
+				var elapsedMs = sw.ElapsedMilliseconds;
+				_logger.LogInfo(0, $"Loaded fake posts from file system in {elapsedMs.ToString()} ms.");
+			}
+		}
 		public void Initialize()
 		{
 			// create a bunch of fake posts
@@ -68,7 +57,7 @@ namespace funda.repository.fake
 				var commentFaker = new Faker<Comment>();
 				commentFaker
 					.RuleFor(c => c.Author, f => f.Person.FullName)
-					.RuleFor(c => c.BodyMarkdown, f => f.Rant.Review())
+					.RuleFor(c => c.BodyAsMarkdown, f => f.Rant.Review())
 					.RuleFor(c => c.CommentedOn, f => f.Date.Past(2))
 					.RuleFor(c => c.DislikeCount, f => f.Random.Int(0, 3))
 					.RuleFor(c => c.LikeCount, f => f.Random.Int(2, 8));
@@ -94,7 +83,7 @@ namespace funda.repository.fake
 					.RuleFor(p => p.PermaLink, f => f.Internet.Url())
 					.RuleFor(p => p.Title, f => f.Lorem.Sentence(5))
 					.RuleFor(p => p.Preamble, f => f.Lorem.Paragraphs(1, 2))
-					.RuleFor(p => p.BodyMarkdown, f => f.Lorem.Paragraphs(6, 10))
+					.RuleFor(p => p.BodyAsMarkdown, f => f.Lorem.Paragraphs(6, 10))
 					.RuleFor(p => p.Author, f => f.Person.FullName)
 					.RuleFor(p => p.PublishDateTime, f => f.Date.Past(2))
 					.RuleFor(p => p.Tags, f => f.Random.WordsArray(2, 5).ToList())
@@ -106,8 +95,62 @@ namespace funda.repository.fake
 
 				sw.Stop();
 
-				Console.WriteLine($"Fake posts initialized in {sw.ElapsedMilliseconds.ToString()} ms.");
+				Console.WriteLine($"Fake posts initialized using Faker (Bogus) in {sw.ElapsedMilliseconds.ToString()} ms.");
 			}
+		}
+
+		// CREATE
+		public Task<AsyncResponse<Post>> CreateAsync(Post obj)
+		{
+			throw new NotImplementedException();
+		}
+
+		// READ
+		public async Task<AsyncResponse<List<Post>>> ReadAllAsync()
+		{
+			try
+			{
+				_logger.LogInfo(Events.Repository.Read.InProgress, $"Retrieving all objects...");
+				return await this.StrategyFactory.ReadAll.ReadAllAsync(_collection);
+			}
+			catch (Exception exc)
+			{
+				_logger.LogError(
+					eventId   : Events.Repository.Read.Failure,
+					message   : $"Failed to retrieve objects.",
+					exception : exc
+				);
+				throw;
+			}
+		}
+		public async Task<AsyncResponse<Post>> ReadAsync(int id)
+		{
+			try
+			{
+				_logger.LogInfo(Events.Repository.Read.InProgress, $"Retrieving object ID:{id.ToString()}...");
+				return await this.StrategyFactory.Read.ReadAsync(id, _collection);
+			}
+			catch(Exception exc)
+			{
+				_logger.LogError(
+					eventId   : Events.Repository.Read.Failure,
+					message   : $"Failed to retrieve object {id.ToString()}.",
+					exception : exc
+				);
+				throw;
+			}
+		}
+
+		// UPDATE
+		public Task<AsyncResponse<Post>> UpdateAsync(Post obj)
+		{
+			throw new NotImplementedException();
+		}
+
+		// DELETE
+		public Task<AsyncResponse<Post>> DeleteAsync(Post obj)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

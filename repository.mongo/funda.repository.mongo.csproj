@@ -11,10 +11,6 @@
     <PackageReference Include="mongodb.driver" Version="2.5.0" />
     <PackageReference Include="mongodb.driver.core" Version="2.5.0" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="strategies\" />
-  </ItemGroup>
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>funda.repository.mongo</RootNamespace>

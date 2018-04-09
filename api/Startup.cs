@@ -18,9 +18,9 @@ using SimpleInjector.Integration.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Swashbuckle.AspNetCore.Swagger;
-using funda.api.Security;
+using funda.api.security;
 
-namespace api
+namespace funda.api
 {
     public class Startup
     {
@@ -69,19 +69,20 @@ namespace api
 			var useFakeData = true;
 			if (bool.TryParse(Environment.GetEnvironmentVariable("USE_FAKE_DATA").ToLower(), out useFakeData) && useFakeData)
 			{
-				_siContainer.RegisterSingleton(typeof(IAsyncRepository<>), typeof(FakeAsyncRepository_Post));
-				_siContainer.RegisterSingleton(typeof(ICreateStrategy<>), typeof(FakeCreateStrategy_NotImplemented<>));
-				_siContainer.RegisterSingleton(typeof(IReadStrategy<>), typeof(FakeReadStrategy_Normal<>));
-				_siContainer.RegisterSingleton(typeof(IUpdateStrategy<>), typeof(FakeUpdateStrategy_NotImplemented<>));
-				_siContainer.RegisterSingleton(typeof(IDeleteStrategy<>), typeof(FakeDeleteStrategy_NotImplemented<>));
+				_siContainer.RegisterSingleton(typeof(IAsyncRepository<>),  typeof(FakeAsyncRepository_Post));
+				_siContainer.RegisterSingleton(typeof(ICreateStrategy<>),   typeof(FakeCreateStrategy_NotImplemented<>));
+				_siContainer.RegisterSingleton(typeof(IReadAllStrategy<>),  typeof(FakeReadAllStrategy_Normal<>));
+				_siContainer.RegisterSingleton(typeof(IReadStrategy<>),		typeof(FakeReadStrategy_Normal<>));
+				_siContainer.RegisterSingleton(typeof(IUpdateStrategy<>),   typeof(FakeUpdateStrategy_NotImplemented<>));
+				_siContainer.RegisterSingleton(typeof(IDeleteStrategy<>),   typeof(FakeDeleteStrategy_NotImplemented<>));
 			}
 			else
 			{
-				_siContainer.RegisterSingleton(typeof(IAsyncRepository<>), typeof(MongoAsyncRepository<>));
-				_siContainer.RegisterSingleton(typeof(ICreateStrategy<>), typeof(MongoCreateStrategy_Normal<>));
-				_siContainer.RegisterSingleton(typeof(IReadStrategy<>), typeof(MongoReadStrategy_Normal<>));
-				_siContainer.RegisterSingleton(typeof(IUpdateStrategy<>), typeof(MongoUpdateStrategy_CreatesNewRevision<>));
-				_siContainer.RegisterSingleton(typeof(IDeleteStrategy<>), typeof(MongoDeleteStrategy_MarkForDeletion<>));
+				_siContainer.RegisterSingleton(typeof(IAsyncRepository<>),  typeof(MongoAsyncRepository<>));
+				_siContainer.RegisterSingleton(typeof(ICreateStrategy<>),   typeof(MongoCreateStrategy_Normal<>));
+				_siContainer.RegisterSingleton(typeof(IReadStrategy<>),     typeof(MongoReadStrategy_Normal<>));
+				_siContainer.RegisterSingleton(typeof(IUpdateStrategy<>),   typeof(MongoUpdateStrategy_CreatesNewRevision<>));
+				_siContainer.RegisterSingleton(typeof(IDeleteStrategy<>),   typeof(MongoDeleteStrategy_MarkForDeletion<>));
 			}
 
 			_siContainer.Verify();

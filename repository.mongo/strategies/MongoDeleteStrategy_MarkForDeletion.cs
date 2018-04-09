@@ -20,7 +20,7 @@ namespace funda.repository.mongo.strategies
 			);
 
 			obj.DeleteFlag = true;
-			Utilities.AddDeleteAudit(obj);
+			Utilities.Auditing.AddDeleteAudit(obj);
 
 			sw.Start();
 			var result = await mongoCollection.UpdateOneAsync(filter, obj.ToBsonDocument());

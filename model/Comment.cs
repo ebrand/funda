@@ -13,10 +13,10 @@ namespace funda.model
 		public string Author { get; set; }
 
 		[JsonProperty("body-as-markdown")]
-		public string BodyMarkdown { get; set; }
+		public string BodyAsMarkdown { get; set; }
 
 		[JsonProperty("body-as-html")]
-		public string BodyAsHtml => new Markdown().Transform(this.BodyMarkdown);
+		public string BodyAsHtml => new Markdown().Transform(this.BodyAsMarkdown);
 
 		[JsonProperty("like-count")]
 		public int LikeCount { get; set; }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using funda.repository.strategies;
 
@@ -7,13 +8,18 @@ namespace funda.repository
     public interface IAsyncRepository<T>
     {
 		IStrategyFactory<T> StrategyFactory { get; }
-        // CREATE
+        
+		// CREATE
         Task<AsyncResponse<T>> CreateAsync(T obj);
-        // READ
+		
+		// READ
+		Task<AsyncResponse<List<T>>> ReadAllAsync();
         Task<AsyncResponse<T>> ReadAsync(int id);
-        // UPDATE
+        
+		// UPDATE
         Task<AsyncResponse<T>> UpdateAsync(T obj);
-        // DELETE
+        
+		// DELETE
         Task<AsyncResponse<T>> DeleteAsync(T obj);
 
 		void Initialize();

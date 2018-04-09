@@ -5,9 +5,10 @@ namespace funda.repository.strategies
 {
 	public interface IStrategyFactory<T>
 	{
-		ICreateStrategy<T> Create { get; set; }
-		IReadStrategy<T>   Read   { get; set; }
-		IUpdateStrategy<T> Update { get; set; }
-		IDeleteStrategy<T> Delete { get; set; }
+		ICreateStrategy<T>  Create { get; set; }
+		IReadAllStrategy<T> ReadAll { get; set; }
+		IReadStrategy<T>    Read   { get; set; }
+		IUpdateStrategy<T>  Update { get; set; }
+		IDeleteStrategy<T>  Delete { get; set; }
 	}
 }

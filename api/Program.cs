@@ -3,7 +3,7 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace api
+namespace funda.api
 {
     public class Program
     {
@@ -23,10 +23,7 @@ namespace api
 			var host = new WebHostBuilder()
 				.UseKestrel()
 				.UseContentRoot(Directory.GetCurrentDirectory())
-				.ConfigureLogging((hostingContext, logging) =>
-					{
-						logging.AddConsole().SetMinimumLevel(logLevel);
-					})
+				.ConfigureLogging((hostingContext, logging) => { logging.AddConsole().SetMinimumLevel(logLevel); })
 				.UseStartup<Startup>()
 				.Build();
 			return host;

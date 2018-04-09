@@ -1,0 +1,11 @@
+{
+	"profiles": {
+		"funda.cli": {
+			"commandName": "Project",
+			"environmentVariables": {
+				"API_URL": "http://localhost:12850/api/posts/",
+				"CLI_VERSION": "1.0"
+			}
+		}
+	}
+}

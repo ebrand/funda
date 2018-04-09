@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
-using funda.api.Security;
 using funda.common.logging;
 using funda.model;
 using funda.repository;
 using Microsoft.AspNetCore.Mvc;
 
-namespace api.Controllers
+namespace api.controllers
 {
-	[BasicAuthentication]
+	//[BasicAuthentication]
 	[Produces("application/json")]
 	[Route("api/posts")]
     public class PostsController : Controller
@@ -21,10 +19,27 @@ namespace api.Controllers
 		{
 			_repos = repos;
 			_logger = logger;
-			_repos.Initialize();
 		}
 
-        [HttpGet("{id}")]
+		[HttpGet]
+		public async Task<IActionResult> ReadAllAsync()
+		{
+			try
+			{
+				var result = await _repos.ReadAllAsync();
+				if (result.Payload != null)
+					return Ok(result.Payload);
+				else
+					return NoContent();
+			}
+			catch (Exception exc)
+			{
+				_logger.LogError(Events.ApiController.Read.Failure, exc.Message, exc);
+				return BadRequest(exc);
+			}
+		}
+
+		[HttpGet("{id}")]
         public async Task<IActionResult> ReadAsync(int id)
 		{
 			try

@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
-using funda.common;
 using funda.common.auditing;
 using funda.common.logging;
 using funda.repository.strategies;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using System.Runtime.Serialization;
+using System.Collections.Generic;
 
 namespace funda.repository.mongo
 {
@@ -24,9 +22,7 @@ namespace funda.repository.mongo
         }
 
 		public void Initialize()
-		{
-			
-		}
+		{}
 
         public async Task<AsyncResponse<T>> CreateAsync(T obj)
         {
@@ -45,7 +41,23 @@ namespace funda.repository.mongo
 			}
         }
 
-        public async Task<AsyncResponse<T>> ReadAsync(int id)
+		public async Task<AsyncResponse<List<T>>> ReadAllAsync()
+		{
+			try
+			{
+				return await this.StrategyFactory.ReadAll.ReadAllAsync(_collection);
+			}
+			catch (Exception exc)
+			{
+				_logger.LogError(
+					eventId   : Events.Repository.Read.Failure,
+					message   : $"Failed to retrieve objects.",
+					exception : exc
+				);
+				throw;
+			}
+		}
+		public async Task<AsyncResponse<T>> ReadAsync(int id)
         {
 			try
 			{
@@ -95,5 +107,7 @@ namespace funda.repository.mongo
 				throw;
 			}
         }
-    }
+
+		
+	}
 }

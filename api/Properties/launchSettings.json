@@ -1,17 +1,16 @@
 {
-	"profiles": {
-		"funda.api": {
-			"commandName": "Project",
-			"launchBrowser": true,
-			"launchUrl": "api/posts/1",
-									"environmentVariables": {
-										"ASPNETCORE_ENVIRONMENT": "Development",
-										"USE_FAKE_DATA": "true",
-										"LOG_LEVEL": "Trace",
-										"API_USERNAME": "funda-api",
-										"API_PASSWORD": "@tl@sis@p@in"
-									},
-			"applicationUrl": "http://localhost:12850/"
-		}
-	}
+  "profiles": {
+    "funda.api": {
+      "commandName": "Project",
+      "launchUrl": "api/posts/1",
+      "environmentVariables": {
+        "API_USERNAME": "funda-api",
+        "API_PASSWORD": "@tl@sis@p@in",
+        "LOG_LEVEL": "Trace",
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "USE_FAKE_DATA": "true"
+      },
+      "applicationUrl": "http://localhost:12850/"
+    }
+  }
 }

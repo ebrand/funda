@@ -19,7 +19,7 @@ namespace funda.repository.mongo
 				new BsonElement("identifier", new BsonString($"{obj.Identifier}"))
 			);
 
-			Utilities.AddUpdateAudit(obj);
+			Utilities.Auditing.AddUpdateAudit(obj);
 
 			sw.Start();
 			var result = await mongoCollection.ReplaceOneAsync(filter, obj.ToBsonDocument());
