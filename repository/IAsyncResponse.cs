@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace funda.repository
 {
@@ -14,7 +15,7 @@ namespace funda.repository
 		/// Gets or sets the payload.
 		/// </summary>
 		/// <value>The payload.</value>
-		T Payload { get; set; }
+		List<T> Payload { get; set; }
 
 		/// <summary>
 		/// Gets or sets the type of the response.

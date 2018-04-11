@@ -14,7 +14,7 @@ namespace funda.repository
 		
 		// READ
         Task<AsyncResponse<T>> ReadAsync(int id);
-		Task<AsyncResponse<List<T>>> ReadAllAsync();
+		Task<AsyncResponse<T>> ReadAllAsync();
 
 		// UPDATE
         Task<AsyncResponse<T>> UpdateAsync(T obj);
@@ -23,8 +23,8 @@ namespace funda.repository
         Task<AsyncResponse<T>> DeleteAsync(T obj);
 
 		// SEARCH
-		Task<AsyncResponse<List<T>>> KeywordSearchAsync(string searchTerm, object collection);
-		Task<AsyncResponse<List<T>>> PropertySearch(List<SearchParameter> searchParameters, object collection);
+		Task<AsyncResponse<T>> KeywordSearchAsync(string searchTerm);
+		Task<AsyncResponse<T>> PropertySearch(List<SearchParameter> searchParameters);
 
 		void Initialize();
     }

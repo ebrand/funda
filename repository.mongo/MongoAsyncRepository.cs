@@ -41,7 +41,7 @@ namespace funda.repository.mongo
 			}
         }
 
-		public async Task<AsyncResponse<List<T>>> ReadAllAsync()
+		public async Task<AsyncResponse<T>> ReadAllAsync()
 		{
 			try
 			{
@@ -108,7 +108,7 @@ namespace funda.repository.mongo
 			}
         }
 
-		public async Task<AsyncResponse<List<T>>> KeywordSearchAsync(string searchTerm, object collection)
+		public async Task<AsyncResponse<T>> KeywordSearchAsync(string searchTerm)
 		{
 			try
 			{
@@ -126,7 +126,7 @@ namespace funda.repository.mongo
 			}
 		}
 
-		public async Task<AsyncResponse<List<T>>> PropertySearch(List<SearchParameter> searchParameters, object collection)
+		public async Task<AsyncResponse<T>> PropertySearch(List<SearchParameter> searchParameters)
 		{
 			try
 			{

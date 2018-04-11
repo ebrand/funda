@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using funda.common;
@@ -27,7 +28,7 @@ namespace funda.repository.mongo.strategies
 			sw.Stop();
 
 			return new AsyncResponse<T>(
-				payload      : obj,
+				payload      : new List<T>() { obj },
 				responseType : AsyncResponseType.Success,
 				timingInMs   : sw.ElapsedMilliseconds,
 				message      : $"Ack: {result.IsAcknowledged.ToString()}. Object {obj.Identifier.ToString()} marked for deletion."

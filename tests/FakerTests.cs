@@ -34,7 +34,7 @@ namespace funda.tests
 			var repository = _siContainer.GetInstance<IAsyncRepository<Post>>();
 			repository.Initialize();
 			var response = await repository.ReadAsync(1);
-			var post = response.Payload;
+			var post = response.Payload[0];
 
 			// ASSERT
 			Assert.NotNull(post);

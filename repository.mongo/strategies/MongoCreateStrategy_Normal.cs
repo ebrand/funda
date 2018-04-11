@@ -6,6 +6,7 @@ using funda.common.auditing;
 using funda.repository.strategies;
 using MongoDB.Driver;
 using MongoDB.Bson;
+using System.Collections.Generic;
 
 namespace funda.repository.mongo.strategies
 {
@@ -23,7 +24,7 @@ namespace funda.repository.mongo.strategies
 			sw.Stop();
 
 			return new AsyncResponse<T>(
-				payload      : obj,
+				payload      : new List<T> { obj },
 				responseType : AsyncResponseType.Success,
 				timingInMs   : sw.ElapsedMilliseconds
 			);

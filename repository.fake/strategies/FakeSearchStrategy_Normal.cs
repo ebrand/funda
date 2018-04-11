@@ -10,7 +10,7 @@ namespace funda.repository.fake.strategies
 {
 	public class FakeSearchStrategy_Normal<T> : ISearchStrategy<T> where T : ISearchable
 	{
-		public async Task<AsyncResponse<List<T>>> KeywordSearchAsync(string searchTerm, object collection)
+		public async Task<AsyncResponse<T>> KeywordSearchAsync(string searchTerm, object collection)
 		{
 			var sw = new Stopwatch();
 			sw.Start();
@@ -18,14 +18,14 @@ namespace funda.repository.fake.strategies
 			var result = await Task.Run(() => fakeCollection.FindAll(p => p.ContainsSearchTerm(searchTerm)));
 			sw.Stop();
 
-			return new AsyncResponse<List<T>>(
+			return new AsyncResponse<T>(
 				payload      : result,
 				responseType : AsyncResponseType.Success,
 				timingInMs   : sw.ElapsedMilliseconds
 			);
 		}
 
-		public Task<AsyncResponse<List<T>>> PropertySearch(List<SearchParameter> searchParameters, object collection)
+		public Task<AsyncResponse<T>> PropertySearch(List<SearchParameter> searchParameters, object collection)
 		{
 			throw new NotImplementedException();
 		}

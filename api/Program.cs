@@ -21,6 +21,7 @@ namespace funda.api
 				Enum.TryParse(logLevelFromEnv, true, out logLevel);
 
 			var host = new WebHostBuilder()
+                .UseApplicationInsights()
 				.UseKestrel()
 				.UseContentRoot(Directory.GetCurrentDirectory())
 				.ConfigureLogging((hostingContext, logging) => { logging.AddConsole().SetMinimumLevel(logLevel); })

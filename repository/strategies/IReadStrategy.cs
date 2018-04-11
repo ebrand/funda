@@ -9,6 +9,6 @@ namespace funda.repository.strategies
 	public interface IReadStrategy<T>
 	{
 		Task<AsyncResponse<T>> ReadAsync(int id, object collection);
-		Task<AsyncResponse<List<T>>> ReadAllAsync(object collection);
+		Task<AsyncResponse<T>> ReadAllAsync(object collection);
 	}
 }

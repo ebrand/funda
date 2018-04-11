@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="bogus" Version="22.0.8" />
     <PackageReference Include="Markdown" Version="2.2.1" />
   </ItemGroup>
 

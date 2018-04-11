@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using funda.common;
 using funda.common.auditing;
 using funda.repository.strategies;
 using MongoDB.Bson;
@@ -24,7 +24,7 @@ namespace funda.repository.mongo.strategies
 			sw.Stop();
 
 			return new AsyncResponse<T>(
-				payload      : obj,
+				payload      : new List<T>() { obj },
 				responseType : AsyncResponseType.Success,
 				timingInMs   : sw.ElapsedMilliseconds,
 				message      : $"Ack: {result.IsAcknowledged.ToString()}. Object {obj.Identifier.ToString()} permanently deleted."

@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <ApplicationInsightsResourceId>/subscriptions/3b9f04ad-b2a2-4da0-9634-9bb729eb3e5e/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/funda.api</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/3b9f04ad-b2a2-4da0-9634-9bb729eb3e5e/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/funda.api</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
     <PackageReference Include="SimpleInjector.Integration.AspNetCore.Mvc" Version="4.1.1" />
     <PackageReference Include="swashbuckle" Version="5.6.0" />
@@ -27,5 +30,8 @@
     <ProjectReference Include="..\repository.fake\funda.repository.fake.csproj" />
     <ProjectReference Include="..\repository\funda.repository.csproj" />
     <ProjectReference Include="..\repository.mongo\funda.repository.mongo.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 </Project>

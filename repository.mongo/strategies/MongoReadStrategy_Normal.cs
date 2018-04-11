@@ -28,13 +28,13 @@ namespace funda.repository.mongo.strategies
 			sw.Stop();
 
 			return new AsyncResponse<T>(
-				payload      : result.Single(),
+				payload      : (List<T>)result,
 				responseType : AsyncResponseType.Success,
 				timingInMs   : sw.ElapsedMilliseconds
 			);
 		}
 
-		public async Task<AsyncResponse<List<T>>> ReadAllAsync(object collection)
+		public async Task<AsyncResponse<T>> ReadAllAsync(object collection)
 		{
 			var sw = new Stopwatch();
 			var mongoCollection = collection as IMongoCollection<BsonDocument>;
@@ -45,7 +45,7 @@ namespace funda.repository.mongo.strategies
 
 			// transform 'result' into a. DTO for trading lookup data information
 
-			return new AsyncResponse<List<T>>(
+			return new AsyncResponse<T>(
 				payload: (List<T>)result,
 				responseType: AsyncResponseType.Success,
 				timingInMs: sw.ElapsedMilliseconds

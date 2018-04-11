@@ -21,6 +21,7 @@ namespace funda.api
         public void ConfigureServices(IServiceCollection services)
         {
 			services.AddMvc();
+			services.AddRouting();
 
 			ConfigureServices_Swagger(services);
 			ConfigureServices_SimpleInjector(services);

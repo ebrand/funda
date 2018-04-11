@@ -17,15 +17,15 @@ namespace funda.repository.fake.strategies
 			{
 				await Task.Run(() => fakeCollection.Add(obj));
 				return new AsyncResponse<T>(
-					payload: obj,
-					responseType: AsyncResponseType.Success,
-					timingInMs: 0
+					payload      : new List<T>() { obj },
+					responseType : AsyncResponseType.Success,
+					timingInMs   : 0
 				);
 			}
 			else
 			{
 				return new AsyncResponse<T>(
-					payload      : obj,
+					payload      : new List<T>() { obj },
 					responseType : AsyncResponseType.Failure,
 					timingInMs   : 0,
 					message      : "The object provided already exists."

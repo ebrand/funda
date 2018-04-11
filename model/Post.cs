@@ -5,6 +5,7 @@ using HeyRed.MarkdownSharp;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System.Linq;
+using funda.model.fakes;
 
 namespace funda.model
 {
@@ -84,6 +85,11 @@ namespace funda.model
 				|| this.References.Any(r => r.ContainsSearchTerm(searchTerm))
 				|| this.Tags.Any(t => t.Contains(searchTerm))
 				|| this.Title.Contains(searchTerm);
+		}
+
+		public static Post SamplePost
+		{
+			get { return FakeFactory.PostFaker.Generate(); }
 		}
 	}
 }

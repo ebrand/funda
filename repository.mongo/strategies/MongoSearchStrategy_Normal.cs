@@ -11,7 +11,7 @@ namespace funda.repository.mongo.strategies
 {
 	public class MongoSearchStrategy_Normal<T> : ISearchStrategy<T> where T : ISearchable
 	{
-		public async Task<AsyncResponse<List<T>>> KeywordSearchAsync(string searchTerm, object collection)
+		public async Task<AsyncResponse<T>> KeywordSearchAsync(string searchTerm, object collection)
 		{
 			var sw = new Stopwatch();
 			sw.Start();
@@ -29,14 +29,14 @@ namespace funda.repository.mongo.strategies
 
 			sw.Stop();
 
-			return new AsyncResponse<List<T>>(
+			return new AsyncResponse<T>(
 				payload      : result.ToList(),
 				responseType : AsyncResponseType.Success,
 				timingInMs   : sw.ElapsedMilliseconds
 			);
 		}
 
-		public Task<AsyncResponse<List<T>>> PropertySearch(List<SearchParameter> searchParameters, object collection)
+		public Task<AsyncResponse<T>> PropertySearch(List<SearchParameter> searchParameters, object collection)
 		{
 			throw new NotImplementedException();
 		}
