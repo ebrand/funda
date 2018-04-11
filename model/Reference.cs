@@ -1,8 +1,9 @@
 ﻿using System;
+using funda.common;
 
 namespace funda.model
 {
-	public class Reference
+	public class Reference : ISearchable
 	{
 		public string Name { get; set; }
 		public string Url { get; set; }
@@ -13,6 +14,13 @@ namespace funda.model
 		{
 			this.Name = name;
 			this.Url = url;
+		}
+
+		public bool ContainsSearchTerm(string searchTerm)
+		{
+			return
+				   this.Name.Contains(searchTerm)
+				|| this.Url.Contains(searchTerm);
 		}
 	}
 }

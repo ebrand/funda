@@ -45,7 +45,7 @@ namespace funda.repository.mongo
 		{
 			try
 			{
-				return await this.StrategyFactory.ReadAll.ReadAllAsync(_collection);
+				return await this.StrategyFactory.Read.ReadAllAsync(_collection);
 			}
 			catch (Exception exc)
 			{
@@ -108,6 +108,40 @@ namespace funda.repository.mongo
 			}
         }
 
-		
+		public async Task<AsyncResponse<List<T>>> KeywordSearchAsync(string searchTerm, object collection)
+		{
+			try
+			{
+				_logger.LogInfo(Events.Repository.Search.InProgress, $"Performing keyword search using search term: '{searchTerm}'...");
+				return await this.StrategyFactory.Search.KeywordSearchAsync(searchTerm, _collection);
+			}
+			catch(Exception exc)
+			{
+				_logger.LogError(
+					eventId: Events.Repository.Search.Failure,
+					message: $"Failed to complete keyword search for search term: '{searchTerm}'.",
+					exception: exc
+				);
+				throw;
+			}
+		}
+
+		public async Task<AsyncResponse<List<T>>> PropertySearch(List<SearchParameter> searchParameters, object collection)
+		{
+			try
+			{
+				_logger.LogInfo(Events.Repository.Search.InProgress, $"Performing property search...");
+				return await this.StrategyFactory.Search.PropertySearch(searchParameters, _collection);
+			}
+			catch(Exception exc)
+			{
+				_logger.LogError(
+					eventId: Events.Repository.Search.Failure,
+					message: $"Failed to complete property search.",
+					exception: exc
+				);
+				throw;
+			}
+		}
 	}
 }

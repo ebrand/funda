@@ -4,7 +4,7 @@ using Newtonsoft.Json.Converters;
 
 namespace funda.common.auditing
 {
-    public class AuditEntry
+	public class AuditEntry : ISearchable
     {
         public DateTime AuditDateTime { get; set; }
         
@@ -22,5 +22,13 @@ namespace funda.common.auditing
             this.AuditMessage = message;
             this.AuditActor = actor;
         }
-    }
+
+		public bool ContainsSearchTerm(string searchTerm)
+		{
+			return
+					this.AuditActor.Contains(searchTerm)
+				||  this.AuditMessage.Contains(searchTerm)
+				||  this.AuditType.ToString().Contains(searchTerm);
+		}
+	}
 }

@@ -1,10 +1,11 @@
 ﻿using System;
+using funda.common;
 using HeyRed.MarkdownSharp;
 using Newtonsoft.Json;
 
 namespace funda.model
 {
-	public class Comment
+	public class Comment : ISearchable
 	{
 		[JsonProperty("commented-on")]
 		public DateTime CommentedOn { get; set; }
@@ -26,5 +27,13 @@ namespace funda.model
 
 		public Comment()
 		{}
+
+		public bool ContainsSearchTerm(string searchTerm)
+		{
+			return
+				   this.Author.Contains(searchTerm)
+				|| this.BodyAsMarkdown.Contains(searchTerm);
+
+		}
 	}
 }

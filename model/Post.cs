@@ -4,6 +4,7 @@ using funda.common.auditing;
 using HeyRed.MarkdownSharp;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using System.Linq;
 
 namespace funda.model
 {
@@ -32,7 +33,7 @@ namespace funda.model
 		[JsonProperty("preamble")]
 		public string Preamble { get; set; }
 
-		[JsonProperty("body")]
+		[JsonProperty("body-as-markdown")]
 		public string BodyAsMarkdown { get; set; }
 
 		[JsonProperty("body-as-html")]
@@ -70,6 +71,19 @@ namespace funda.model
 			this.Comments 		   = new List<Comment>();
 			this.References 	   = new List<Reference>();
 			this.AuditEntries 	   = new List<AuditEntry>();
+		}
+
+		public bool ContainsSearchTerm(string searchTerm)
+		{
+			return
+				   this.AuditEntries.Any(ae => ae.ContainsSearchTerm(searchTerm))
+				|| this.Author.Contains(searchTerm)
+				|| this.BodyAsMarkdown.Contains(searchTerm)
+				|| this.Comments.Any(c => c.ContainsSearchTerm(searchTerm))
+				|| this.Preamble.Contains(searchTerm)
+				|| this.References.Any(r => r.ContainsSearchTerm(searchTerm))
+				|| this.Tags.Any(t => t.Contains(searchTerm))
+				|| this.Title.Contains(searchTerm);
 		}
 	}
 }

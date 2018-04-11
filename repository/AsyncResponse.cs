@@ -1,6 +1,7 @@
 using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.Collections.Generic;
 
 namespace funda.repository
 {
@@ -8,8 +9,8 @@ namespace funda.repository
     {
         public string Message { get; set; }
         
-        public T Payload { get; set; }       
-        
+        public T Payload { get; set; }
+
         [JsonConverter(typeof(StringEnumConverter))]
         public AsyncResponseType ResponseType { get; set; }
         

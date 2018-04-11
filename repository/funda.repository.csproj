@@ -10,5 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\common\funda.common.csproj" />
+    <ProjectReference Include="..\model\funda.model.csproj" />
   </ItemGroup>
 </Project>

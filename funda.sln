@@ -2,23 +2,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "funda.common", "common\funda.common.csproj", "{111B0A75-625D-4C0C-8CF4-FACBE9E305E2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "funda.common", "common\funda.common.csproj", "{111B0A75-625D-4C0C-8CF4-FACBE9E305E2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "funda.api", "api\funda.api.csproj", "{3F59E692-1A99-48E6-950B-ECAD59D876AE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "funda.api", "api\funda.api.csproj", "{3F59E692-1A99-48E6-950B-ECAD59D876AE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "funda.model", "model\funda.model.csproj", "{BB586AA2-9151-4A80-8CBF-41496356AEF4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "funda.model", "model\funda.model.csproj", "{BB586AA2-9151-4A80-8CBF-41496356AEF4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "funda.repository", "repository\funda.repository.csproj", "{93D96954-F699-48A6-B8D4-F6DCAFBBEE52}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "funda.repository", "repository\funda.repository.csproj", "{93D96954-F699-48A6-B8D4-F6DCAFBBEE52}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "funda.repository.mongo", "repository.mongo\funda.repository.mongo.csproj", "{75517E1A-2140-45A3-8D6E-75D37138640A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "funda.repository.mongo", "repository.mongo\funda.repository.mongo.csproj", "{75517E1A-2140-45A3-8D6E-75D37138640A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "funda.web", "web\funda.web.csproj", "{0DF60F76-3048-479E-99FB-29FD64490EC7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "funda.web", "web\funda.web.csproj", "{0DF60F76-3048-479E-99FB-29FD64490EC7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "funda.cli", "funda.cli\funda.cli.csproj", "{90EC9B77-446E-40C3-9A15-5426DD628624}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "funda.cli", "funda.cli\funda.cli.csproj", "{90EC9B77-446E-40C3-9A15-5426DD628624}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "funda.repository.fake", "repository.fake\funda.repository.fake.csproj", "{03914EA5-3A09-44E6-81F8-0EFEB6C746F6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "funda.repository.fake", "repository.fake\funda.repository.fake.csproj", "{03914EA5-3A09-44E6-81F8-0EFEB6C746F6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "funda.tests", "tests\funda.tests.csproj", "{E833D23E-719F-4C0B-99AE-4ABC6F83F418}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "funda.tests", "tests\funda.tests.csproj", "{E833D23E-719F-4C0B-99AE-4ABC6F83F418}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,5 +68,11 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {99C277FC-F0E2-405A-A580-67EA3CC3DDF2}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = PrefixedHierarchical
+		$0.VersionControlPolicy = $2
 	EndGlobalSection
 EndGlobal

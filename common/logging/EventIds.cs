@@ -34,6 +34,13 @@ namespace funda.common.logging
                 public static int Failure	 = 42;
 				public static int InProgress = 43;
 			}
+			public static class Search
+			{
+				public static int Success = 50;
+				public static int Warning = 51;
+				public static int Failure = 52;
+				public static int InProgress = 53;
+			}
         }
 
         public static class ApiController
@@ -66,6 +73,13 @@ namespace funda.common.logging
                 public static int Failure	 = 402;
 				public static int InProgress = 403;
 			}
+			public static class Search
+			{
+				public static int Success = 500;
+				public static int Warning = 501;
+				public static int Failure = 502;
+				public static int InProgress = 503;
+			}
         }
 
         public static class WebController
@@ -97,6 +111,13 @@ namespace funda.common.logging
                 public static int Warning	 = 4001;
                 public static int Failure	 = 4002;
 				public static int InProgress = 4003;
+			}
+			public static class Search
+			{
+				public static int Success = 5000;
+				public static int Warning = 5001;
+				public static int Failure = 5002;
+				public static int InProgress = 5003;
 			}
         }
     }

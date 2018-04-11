@@ -29,13 +29,13 @@ namespace funda.repository.fake
 			if (_collection == null)
 				_collection = new List<Post>();
 
-			// if this fake repository is constructed vi the DI container, it will
+			// if this fake repository is constructed via the DI container, it will
 			// create an initial 1,000 fake posts by deserializing them from a
-			// local file ("1000posts.min.json"). Subsequently calling the
+			// local file ("fakedata/1000posts.min.json"). Subsequently calling the
 			// "Initialize()" method manually will replace these default
 			// customers with the provided arbitrary number of customers created
 			// using Faker (Bogus).
-			using (StreamReader file = File.OpenText(@"FakeData/1000posts.min.json"))
+			using (StreamReader file = File.OpenText(@"fakedata/1000posts.min.json"))
 			{
 				JsonSerializer serializer = new JsonSerializer();
 				var sw = new Stopwatch();
@@ -49,60 +49,71 @@ namespace funda.repository.fake
 		public void Initialize()
 		{
 			// create a bunch of fake posts
-			if (_collection == null)
-			{
-				var sw = new Stopwatch();
-				sw.Start();
-				_collection = new List<Post>();
-				var commentFaker = new Faker<Comment>();
-				commentFaker
-					.RuleFor(c => c.Author, f => f.Person.FullName)
-					.RuleFor(c => c.BodyAsMarkdown, f => f.Rant.Review())
-					.RuleFor(c => c.CommentedOn, f => f.Date.Past(2))
-					.RuleFor(c => c.DislikeCount, f => f.Random.Int(0, 3))
-					.RuleFor(c => c.LikeCount, f => f.Random.Int(2, 8));
 
-				var referenceFaker = new Faker<Reference>();
-				referenceFaker
-					.RuleFor(r => r.Name, f => f.Lorem.Sentence())
-					.RuleFor(r => r.Url, f => f.Internet.Url());
+			var sw = new Stopwatch();
+			sw.Start();
+			_collection = new List<Post>();
+			var commentFaker = new Faker<Comment>();
+			commentFaker
+				.RuleFor(c => c.Author, f => f.Person.FullName)
+				.RuleFor(c => c.BodyAsMarkdown, f => f.Rant.Review())
+				.RuleFor(c => c.CommentedOn, f => f.Date.Past(2))
+				.RuleFor(c => c.DislikeCount, f => f.Random.Int(0, 3))
+				.RuleFor(c => c.LikeCount, f => f.Random.Int(2, 8));
 
-				var auditFaker = new Faker<AuditEntry>();
-				auditFaker
-					.RuleFor(a => a.AuditActor, f => f.Person.FullName)
-					.RuleFor(a => a.AuditDateTime, f => f.Date.Past(2))
-					.RuleFor(a => a.AuditMessage, f => f.Lorem.Sentence())
-					.RuleFor(a => a.AuditType, f => f.Random.Enum<AuditType>());
+			var referenceFaker = new Faker<Reference>();
+			referenceFaker
+				.RuleFor(r => r.Name, f => f.Lorem.Sentence())
+				.RuleFor(r => r.Url, f => f.Internet.Url());
 
-				var postFaker = new Faker<Post>();
-				postFaker
-					.RuleFor(p => p.Identifier, f => f.IndexFaker)
-					.RuleFor(p => p.DeleteFlag, false)
-					.RuleFor(p => p.AllowComments, true)
-					.RuleFor(p => p.DisplayReferences, true)
-					.RuleFor(p => p.PermaLink, f => f.Internet.Url())
-					.RuleFor(p => p.Title, f => f.Lorem.Sentence(5))
-					.RuleFor(p => p.Preamble, f => f.Lorem.Paragraphs(1, 2))
-					.RuleFor(p => p.BodyAsMarkdown, f => f.Lorem.Paragraphs(6, 10))
-					.RuleFor(p => p.Author, f => f.Person.FullName)
-					.RuleFor(p => p.PublishDateTime, f => f.Date.Past(2))
-					.RuleFor(p => p.Tags, f => f.Random.WordsArray(2, 5).ToList())
-					.RuleFor(p => p.Comments, f => commentFaker.GenerateBetween(2, 10))
-					.RuleFor(p => p.References, f => referenceFaker.GenerateBetween(0, 3))
-					.RuleFor(p => p.AuditEntries, f => auditFaker.GenerateBetween(0, 2));
+			var auditFaker = new Faker<AuditEntry>();
+			auditFaker
+				.RuleFor(a => a.AuditActor, f => f.Person.FullName)
+				.RuleFor(a => a.AuditDateTime, f => f.Date.Past(2))
+				.RuleFor(a => a.AuditMessage, f => f.Lorem.Sentence())
+				.RuleFor(a => a.AuditType, f => f.Random.Enum<AuditType>());
 
-				_collection = postFaker.Generate(1000);
+			var postFaker = new Faker<Post>();
+			postFaker
+				.RuleFor(p => p.Identifier, f => f.IndexFaker)
+				.RuleFor(p => p.DeleteFlag, false)
+				.RuleFor(p => p.AllowComments, true)
+				.RuleFor(p => p.DisplayReferences, true)
+				.RuleFor(p => p.PermaLink, f => f.Internet.Url())
+				.RuleFor(p => p.Title, f => f.Lorem.Sentence(5))
+				.RuleFor(p => p.Preamble, f => f.Lorem.Paragraphs(1, 2))
+				.RuleFor(p => p.BodyAsMarkdown, f => f.Lorem.Paragraphs(6, 10))
+				.RuleFor(p => p.Author, f => f.Person.FullName)
+				.RuleFor(p => p.PublishDateTime, f => f.Date.Past(2))
+				.RuleFor(p => p.Tags, f => f.Random.WordsArray(2, 5).ToList())
+				.RuleFor(p => p.Comments, f => commentFaker.GenerateBetween(2, 10))
+				.RuleFor(p => p.References, f => referenceFaker.GenerateBetween(0, 3))
+				.RuleFor(p => p.AuditEntries, f => auditFaker.GenerateBetween(0, 2));
 
-				sw.Stop();
+			_collection = postFaker.Generate(1000);
 
-				Console.WriteLine($"Fake posts initialized using Faker (Bogus) in {sw.ElapsedMilliseconds.ToString()} ms.");
-			}
+			sw.Stop();
+
+			Console.WriteLine($"Fake posts initialized using Faker (Bogus) in {sw.ElapsedMilliseconds.ToString()} ms.");
 		}
 
 		// CREATE
-		public Task<AsyncResponse<Post>> CreateAsync(Post obj)
+		public async Task<AsyncResponse<Post>> CreateAsync(Post obj)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				_logger.LogInfo(Events.Repository.Read.InProgress, $"Create new object...");
+				return await this.StrategyFactory.Create.CreateAsync(obj, _collection);
+			}
+			catch(Exception exc)
+			{
+				_logger.LogError(
+					eventId: Events.Repository.Create.Failure,
+					message: $"Failed to retrieve objects.",
+					exception: exc
+				);
+				throw;
+			}
 		}
 
 		// READ
@@ -111,13 +122,13 @@ namespace funda.repository.fake
 			try
 			{
 				_logger.LogInfo(Events.Repository.Read.InProgress, $"Retrieving all objects...");
-				return await this.StrategyFactory.ReadAll.ReadAllAsync(_collection);
+				return await this.StrategyFactory.Read.ReadAllAsync(_collection);
 			}
 			catch (Exception exc)
 			{
 				_logger.LogError(
 					eventId   : Events.Repository.Read.Failure,
-					message   : $"Failed to retrieve objects.",
+					message   : $"Failed to retrieve all objects.",
 					exception : exc
 				);
 				throw;
@@ -134,7 +145,7 @@ namespace funda.repository.fake
 			{
 				_logger.LogError(
 					eventId   : Events.Repository.Read.Failure,
-					message   : $"Failed to retrieve object {id.ToString()}.",
+					message   : $"Failed to retrieve object ID:{id.ToString()}.",
 					exception : exc
 				);
 				throw;
@@ -142,15 +153,78 @@ namespace funda.repository.fake
 		}
 
 		// UPDATE
-		public Task<AsyncResponse<Post>> UpdateAsync(Post obj)
+		public async Task<AsyncResponse<Post>> UpdateAsync(Post obj)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				_logger.LogInfo(Events.Repository.Read.InProgress, $"Updating object ID:{obj.Identifier.ToString()}...");
+				return await this.StrategyFactory.Update.UpdateAsync(obj, _collection);
+			}
+			catch(Exception exc)
+			{
+				_logger.LogError(
+					eventId: Events.Repository.Update.Failure,
+					message: $"Failed to update object ID:{obj.Identifier.ToString()}.",
+					exception: exc
+				);
+				throw;
+			}
 		}
 
 		// DELETE
-		public Task<AsyncResponse<Post>> DeleteAsync(Post obj)
+		public async Task<AsyncResponse<Post>> DeleteAsync(Post obj)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				_logger.LogInfo(Events.Repository.Read.InProgress, $"Deleting object ID:{obj.Identifier.ToString()}...");
+				return await this.StrategyFactory.Delete.DeleteAsync(obj, _collection);
+			}
+			catch(Exception exc)
+			{
+				_logger.LogError(
+					eventId: Events.Repository.Delete.Failure,
+					message: $"Failed to delete object ID:{obj.Identifier.ToString()}.",
+					exception: exc
+				);
+				throw;
+			}
+		}
+
+		// SEARCH
+		public async Task<AsyncResponse<List<Post>>> KeywordSearchAsync(string searchTerm, object collection)
+		{
+			try
+			{
+				_logger.LogInfo(Events.Repository.Search.InProgress, $"Performing keyword search using search term: '{searchTerm}'...");
+				return await this.StrategyFactory.Search.KeywordSearchAsync(searchTerm, _collection);
+			}
+			catch(Exception exc)
+			{
+				_logger.LogError(
+					eventId: Events.Repository.Search.Failure,
+					message: $"Failed to complete keyword search for search term: '{searchTerm}'.",
+					exception: exc
+				);
+				throw;
+			}
+		}
+
+		public async Task<AsyncResponse<List<Post>>> PropertySearch(List<SearchParameter> searchParameters, object collection)
+		{
+			try
+			{
+				_logger.LogInfo(Events.Repository.Search.InProgress, $"Performing property search...");
+				return await this.StrategyFactory.Search.PropertySearch(searchParameters, _collection);
+			}
+			catch(Exception exc)
+			{
+				_logger.LogError(
+					eventId: Events.Repository.Search.Failure,
+					message: $"Failed to complete property search.",
+					exception: exc
+				);
+				throw;
+			}
 		}
 	}
 }
