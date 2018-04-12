@@ -1,7 +1,5 @@
 ﻿using funda.common.auditing;
 using funda.common.logging;
-using funda.model;
-using funda.model.fakes;
 using funda.repository.strategies;
 using Newtonsoft.Json;
 using System;
@@ -13,20 +11,20 @@ using System.Threading.Tasks;
 
 namespace funda.repository.fake
 {
-	public class FakeAsyncRepository_Post : IAsyncRepository<Post>
+	public class FakeAsyncRepository<T> : IAsyncRepository<T> where T : IAuditable
 	{
-		private List<Post> _collection;
-		private readonly IFundaLogger<Post> _logger;
-		public IStrategyFactory<Post> StrategyFactory { get; private set; }
+		private readonly object _collection;
+		private readonly IFundaLogger<T> _logger;
+		public IStrategyFactory<T> StrategyFactory { get; private set; }
 
-		public FakeAsyncRepository_Post(IStrategyFactory<Post> strategyFactory, IFundaLogger<Post> logger)
+		public FakeAsyncRepository(IStrategyFactory<T> strategyFactory, IFundaLogger<T> logger)
 		{
 			_logger = logger;
 			this.StrategyFactory = strategyFactory;
 
 			_logger = logger;
 			if (_collection == null)
-				_collection = new List<Post>();
+				_collection = new List<T>();
 
 			// if this fake repository is constructed via the DI container, it will
 			// create an initial 1,000 fake posts by deserializing them from a
@@ -39,37 +37,29 @@ namespace funda.repository.fake
 				JsonSerializer serializer = new JsonSerializer();
 				var sw = new Stopwatch();
 				sw.Start();
-				_collection = ((Post[])serializer.Deserialize(file, typeof(Post[]))).ToList();
+				_collection = ((T[])serializer.Deserialize(file, typeof(T[]))).ToList();
 				sw.Stop();
 				var elapsedMs = sw.ElapsedMilliseconds;
 				_logger.LogInfo(0, $"Loaded fake posts from file system in {elapsedMs.ToString()} ms.");
 			}
 		}
+
 		public void Initialize()
-		{
-			// create a bunch of fake posts
-
-			var sw = new Stopwatch();
-			sw.Start();
-			_collection = FakeFactory.PostFaker.Generate(1000);
-			sw.Stop();
-
-			Console.WriteLine($"Fake posts initialized using Faker (Bogus) in {sw.ElapsedMilliseconds.ToString()} ms.");
-		}
+		{}
 
 		// CREATE
-		public async Task<AsyncResponse<Post>> CreateAsync(Post obj)
+		public async Task<AsyncResponse<T>> CreateAsync(T obj)
 		{
 			try
 			{
-				_logger.LogInfo(Events.Repository.Read.InProgress, $"Create new object...");
+				_logger.LogInfo(Events.Repository.Create.InProgress, $"Creating new object...");
 				return await this.StrategyFactory.Create.CreateAsync(obj, _collection);
 			}
 			catch(Exception exc)
 			{
 				_logger.LogError(
 					eventId   : Events.Repository.Create.Failure,
-					message   : $"Failed to retrieve objects.",
+					message   : $"Failed to create object {obj.Identifier.ToString()}.",
 					exception : exc
 				);
 				throw;
@@ -77,29 +67,28 @@ namespace funda.repository.fake
 		}
 
 		// READ
-		public async Task<AsyncResponse<Post>> ReadAllAsync()
+		public async Task<AsyncResponse<T>> ReadAllAsync()
 		{
 			try
 			{
-				_logger.LogInfo(Events.Repository.Read.InProgress, $"Retrieving all objects...");
+				_logger.LogInfo(Events.Repository.Read.InProgress, $"Reading all objects...");
 				return await this.StrategyFactory.Read.ReadAllAsync(_collection);
 			}
 			catch (Exception exc)
 			{
 				_logger.LogError(
 					eventId   : Events.Repository.Read.Failure,
-					message   : $"Failed to retrieve all objects.",
+					message   : $"Failed to retrieve objects.",
 					exception : exc
 				);
 				throw;
 			}
 		}
-
-		public async Task<AsyncResponse<Post>> ReadAsync(int id)
+		public async Task<AsyncResponse<T>> ReadAsync(int id)
 		{
 			try
 			{
-				_logger.LogInfo(Events.Repository.Read.InProgress, $"Retrieving object ID:{id.ToString()}...");
+				_logger.LogInfo(Events.Repository.Read.InProgress, $"Reading object ID:{id.ToString()}...");
 				return await this.StrategyFactory.Read.ReadAsync(id, _collection);
 			}
 			catch(Exception exc)
@@ -114,11 +103,11 @@ namespace funda.repository.fake
 		}
 
 		// UPDATE
-		public async Task<AsyncResponse<Post>> UpdateAsync(Post obj)
+		public async Task<AsyncResponse<T>> UpdateAsync(T obj)
 		{
 			try
 			{
-				_logger.LogInfo(Events.Repository.Read.InProgress, $"Updating object ID:{obj.Identifier.ToString()}...");
+				_logger.LogInfo(Events.Repository.Update.InProgress, $"Updating object ID:{obj.Identifier.ToString()}...");
 				return await this.StrategyFactory.Update.UpdateAsync(obj, _collection);
 			}
 			catch(Exception exc)
@@ -133,11 +122,11 @@ namespace funda.repository.fake
 		}
 
 		// DELETE
-		public async Task<AsyncResponse<Post>> DeleteAsync(Post obj)
+		public async Task<AsyncResponse<T>> DeleteAsync(T obj)
 		{
 			try
 			{
-				_logger.LogInfo(Events.Repository.Read.InProgress, $"Deleting object ID:{obj.Identifier.ToString()}...");
+				_logger.LogInfo(Events.Repository.Delete.InProgress, $"Deleting object ID:{obj.Identifier.ToString()}...");
 				return await this.StrategyFactory.Delete.DeleteAsync(obj, _collection);
 			}
 			catch(Exception exc)
@@ -152,7 +141,7 @@ namespace funda.repository.fake
 		}
 
 		// SEARCH
-		public async Task<AsyncResponse<Post>> KeywordSearchAsync(string searchTerm)
+		public async Task<AsyncResponse<T>> KeywordSearchAsync(string searchTerm)
 		{
 			try
 			{
@@ -169,8 +158,7 @@ namespace funda.repository.fake
 				throw;
 			}
 		}
-
-		public async Task<AsyncResponse<Post>> PropertySearch(List<SearchParameter> searchParameters)
+		public async Task<AsyncResponse<T>> PropertySearch(List<SearchParameter> searchParameters)
 		{
 			try
 			{

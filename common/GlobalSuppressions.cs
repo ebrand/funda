@@ -7,4 +7,5 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Vulnerability", "S1104:Fields should not have public accessibility", Justification = "<Pending>", Scope = "member", Target = "~F:funda.common.logging.Events.WebController.Create.Success")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Code Smell", "S2223:Non-constant static fields should not be visible", Justification = "<Pending>", Scope = "member", Target = "~F:funda.common.logging.Events.WebController.Create.Warning")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Vulnerability", "S1104:Fields should not have public accessibility", Justification = "<Pending>", Scope = "member", Target = "~F:funda.common.logging.Events.WebController.Create.Warning")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Blocker Vulnerability", "S2068:Credentials should not be hard-coded", Justification = "<Pending>", Scope = "member", Target = "~F:funda.common.Utilities.Configuration.KeyNames._apiPassword")]
 

@@ -27,7 +27,13 @@ namespace funda.api
 			if(env.IsDevelopment())
 				app.UseDeveloperExceptionPage();
 
-			app.UseMvc();
+			app.UseMvc(routes => {
+				routes.MapRoute("ReadAllPosts",      "api/{controller=Posts}/{action=ReadAllAsync}");
+				routes.MapRoute("ReadOnePost",       "api/{controller=Posts}/{action=ReadAsync}/{id}");
+				routes.MapRoute("ReadLatestPosts",   "api/{controller=Posts}/{action=ReadLatestAsync}");
+				routes.MapRoute("PostKeywordSearch", "api/{controller=Search}/{action=PostsKeywordSearchAsync}/{q}");
+				routes.MapRoute("Health",			 "api/{controller=Health}/{action=GetHealth}");
+			});
 
 			Configure_Swagger(app);
 			Configure_SimpleInjector();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using funda.common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
@@ -8,14 +9,6 @@ namespace funda.api.security
 {
 	public class BasicAuthenticationAttribute : ActionFilterAttribute
 	{
-
-		private const string AUTHORIZATION_HEADER = "Authorization";
-		private const string AUTHORIZATION_TYPE = "Basic";
-		private const string ENCODING = "iso-8859-1";
-
-		private static readonly string USERNAME = Environment.GetEnvironmentVariable("FUNDA_API_USERNAME");
-		private static readonly string PASSWORD = Environment.GetEnvironmentVariable("FUNDA_API_PASSWORD");
-
 		public override void OnActionExecuting(ActionExecutingContext context)
 		{
 			var logger = context.HttpContext.RequestServices.GetService(typeof(ILogger<BasicAuthenticationAttribute>)) as ILogger;
@@ -23,14 +16,14 @@ namespace funda.api.security
 			string username = "";
 			string password = "";
 
-			string authHeader = context.HttpContext.Request.Headers[AUTHORIZATION_HEADER];
-			if (authHeader != null && authHeader.StartsWith(AUTHORIZATION_TYPE))
+			string authHeader = context.HttpContext.Request.Headers[Utilities.Configuration.AuthHeaderName];
+			if (authHeader != null && authHeader.StartsWith(Utilities.Configuration.AuthType))
 			{
 				// Extract credentials
 				try
 				{
-					string encodedUsernamePassword = authHeader.Substring(AUTHORIZATION_TYPE.Length + 1).Trim();
-					Encoding encoding = Encoding.GetEncoding(ENCODING);
+					string encodedUsernamePassword = authHeader.Substring(Utilities.Configuration.AuthType.Length + 1).Trim();
+					Encoding encoding = Encoding.GetEncoding(Utilities.Configuration.Encoding);
 					string usernamePassword = encoding.GetString(Convert.FromBase64String(encodedUsernamePassword));
 
 					int seperatorIndex = usernamePassword.IndexOf(':');
@@ -39,7 +32,7 @@ namespace funda.api.security
 					password = usernamePassword.Substring(seperatorIndex + 1);
 
 					// Validate credentials
-					if (username == USERNAME && password == PASSWORD)
+					if (username == Utilities.Configuration.ApiUserName && password == Utilities.Configuration.ApiPassword)
 					{
 						logger.LogInformation(username + " successfully authenticated");
 						return;

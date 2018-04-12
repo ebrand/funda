@@ -10,7 +10,7 @@ namespace funda.api.Controllers
 	public class HealthController : Controller
 	{
 		[HttpGet]
-		public IActionResult Get()
+		public IActionResult GetHealth()
 		{
 			var envVars = Environment.GetEnvironmentVariables();
 			var envs = new SortedList();

@@ -3,6 +3,7 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using funda.common;
 
 namespace funda.api
 {
@@ -19,12 +20,7 @@ namespace funda.api
 				.AddEnvironmentVariables()
 				.Build();
 			
-			var logLevel = LogLevel.Trace;
-			var logLevelFromEnv = Environment.GetEnvironmentVariable("FUNDA_LOG_LEVEL");
-
-			if (!string.IsNullOrEmpty(logLevelFromEnv))
-				Enum.TryParse(logLevelFromEnv, true, out logLevel);
-			
+			var logLevel = Utilities.Configuration.LogLevel;
 			var host = new WebHostBuilder()
                 .UseApplicationInsights()
 				.UseKestrel()

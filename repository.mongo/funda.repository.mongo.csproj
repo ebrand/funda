@@ -1,6 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <Compile Remove="MongoAsyncRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\common\funda.common.csproj" />
     <ProjectReference Include="..\repository\funda.repository.csproj" />
     <ProjectReference Include="..\model\funda.model.csproj" />

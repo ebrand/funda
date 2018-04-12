@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="FakeAsyncRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\repository\funda.repository.csproj" />
     <ProjectReference Include="..\model\funda.model.csproj" />
     <ProjectReference Include="..\common\funda.common.csproj" />

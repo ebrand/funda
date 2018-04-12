@@ -1,18 +1,18 @@
 {
-	"profiles":
-	{
-		"funda.api":
-		{
+	"profiles": {
+		"funda.api": {
 			"applicationUrl": "http://localhost:12850/",
 			"commandName": "Project",
 			"launchUrl": "api/posts/111",
-			"environmentVariables":
-			{
+			"environmentVariables": {
 				"ASPNETCORE_ENVIRONMENT": "Development",
 				"FUNDA_API_USERNAME": "funda-api",
 				"FUNDA_API_PASSWORD": "@tl@sis@p@in",
 				"FUNDA_LOG_LEVEL": "Trace",
-				"FUNDA_USE_FAKE_DATA": "true"
+				"FUNDA_USE_FAKE_DATA": "true",
+				"FUNDA_AUTH_HEADER_NAME": "Authorization",
+				"FUNDA_AUTH_TYPE": "Basic",
+				"FUNDA_ENCODING": "iso-8859-1"
 			}
 		}
 	}

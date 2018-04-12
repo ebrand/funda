@@ -1,4 +1,5 @@
 ﻿using System;
+using funda.common;
 using funda.common.logging;
 using funda.repository;
 using funda.repository.fake;
@@ -36,18 +37,11 @@ namespace funda.api
 			// ### SimpleInjector DI container
 			_siContainer.RegisterSingleton(typeof(IFundaLogger<>), typeof(FundaMicrosoftLogger<>));
 			_siContainer.RegisterSingleton(typeof(IStrategyFactory<>), typeof(StrategyFactory<>));
-			//_siContainer.RegisterSingleton(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));
+			_siContainer.RegisterSingleton(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));
 
 			// ### These feed specific strategies into the above strategy factory (create, read, update, and delete)
-			var useFakeData = true;
-			var useFakeDataFromEnv = Environment.GetEnvironmentVariable("FUNDA_USE_FAKE_DATA");
-
-			if(!string.IsNullOrEmpty(useFakeDataFromEnv))
-				bool.TryParse(useFakeDataFromEnv, out useFakeData);
-
-			if(useFakeData)
+			if (Utilities.Configuration.UseFakeData)
 			{
-				_siContainer.RegisterSingleton(typeof(IAsyncRepository<>), typeof(FakeAsyncRepository_Post));
 				_siContainer.RegisterSingleton(typeof(ICreateStrategy<>),  typeof(FakeCreateStrategy_NotImplemented<>));
 				_siContainer.RegisterSingleton(typeof(IReadStrategy<>),    typeof(FakeReadStrategy_Normal<>));
 				_siContainer.RegisterSingleton(typeof(IUpdateStrategy<>),  typeof(FakeUpdateStrategy_NotImplemented<>));
@@ -56,7 +50,6 @@ namespace funda.api
 			}
 			else
 			{
-				_siContainer.RegisterSingleton(typeof(IAsyncRepository<>), typeof(MongoAsyncRepository<>));
 				_siContainer.RegisterSingleton(typeof(ICreateStrategy<>),  typeof(MongoCreateStrategy_Normal<>));
 				_siContainer.RegisterSingleton(typeof(IReadStrategy<>),    typeof(MongoReadStrategy_Normal<>));
 				_siContainer.RegisterSingleton(typeof(IUpdateStrategy<>),  typeof(MongoUpdateStrategy_CreatesNewRevision<>));

@@ -20,7 +20,7 @@ namespace funda.tests
 			// ARRANGE
 			// ### SimpleInjector DI container
 			_siContainer.Register(typeof(IFundaLogger<>), typeof(FundaMicrosoftLogger<>));
-			_siContainer.Register(typeof(IAsyncRepository<>), typeof(MongoAsyncRepository<>));
+			_siContainer.Register(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));
 			_siContainer.Register(typeof(IStrategyFactory<>), typeof(StrategyFactory<>));
 
 			// ### These feed a specific strategy factory and CRUD strategies into the above strategy factory
@@ -36,7 +36,7 @@ namespace funda.tests
 
 			_siContainer.Verify();
 
-			Assert.IsType<MongoAsyncRepository<Post>>(repository);
+			Assert.IsType<AsyncRepository<Post>>(repository);
 			Assert.IsType<StrategyFactory<Post>>(repository.StrategyFactory);
 			Assert.IsType<MongoCreateStrategy_Normal<Post>>(repository.StrategyFactory.Create);
 			Assert.IsType<MongoReadStrategy_Normal<Post>>(repository.StrategyFactory.Read);
