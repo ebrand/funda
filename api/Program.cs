@@ -2,6 +2,7 @@
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 namespace funda.api
 {
@@ -14,12 +15,16 @@ namespace funda.api
 
 		public static IWebHost BuildWebHost(string[] args)
 		{
+			new ConfigurationBuilder()
+				.AddEnvironmentVariables()
+				.Build();
+			
 			var logLevel = LogLevel.Trace;
-			var logLevelFromEnv = Environment.GetEnvironmentVariable("LOG_LEVEL");
+			var logLevelFromEnv = Environment.GetEnvironmentVariable("FUNDA_LOG_LEVEL");
 
 			if (!string.IsNullOrEmpty(logLevelFromEnv))
 				Enum.TryParse(logLevelFromEnv, true, out logLevel);
-
+			
 			var host = new WebHostBuilder()
                 .UseApplicationInsights()
 				.UseKestrel()

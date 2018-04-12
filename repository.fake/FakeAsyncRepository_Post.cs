@@ -68,9 +68,9 @@ namespace funda.repository.fake
 			catch(Exception exc)
 			{
 				_logger.LogError(
-					eventId: Events.Repository.Create.Failure,
-					message: $"Failed to retrieve objects.",
-					exception: exc
+					eventId   : Events.Repository.Create.Failure,
+					message   : $"Failed to retrieve objects.",
+					exception : exc
 				);
 				throw;
 			}
@@ -124,9 +124,9 @@ namespace funda.repository.fake
 			catch(Exception exc)
 			{
 				_logger.LogError(
-					eventId: Events.Repository.Update.Failure,
-					message: $"Failed to update object ID:{obj.Identifier.ToString()}.",
-					exception: exc
+					eventId   : Events.Repository.Update.Failure,
+					message   : $"Failed to update object ID:{obj.Identifier.ToString()}.",
+					exception : exc
 				);
 				throw;
 			}
@@ -143,9 +143,9 @@ namespace funda.repository.fake
 			catch(Exception exc)
 			{
 				_logger.LogError(
-					eventId: Events.Repository.Delete.Failure,
-					message: $"Failed to delete object ID:{obj.Identifier.ToString()}.",
-					exception: exc
+					eventId   : Events.Repository.Delete.Failure,
+					message   : $"Failed to delete object ID:{obj.Identifier.ToString()}.",
+					exception : exc
 				);
 				throw;
 			}
@@ -162,9 +162,9 @@ namespace funda.repository.fake
 			catch(Exception exc)
 			{
 				_logger.LogError(
-					eventId: Events.Repository.Search.Failure,
-					message: $"Failed to complete keyword search for search term: '{searchTerm}'.",
-					exception: exc
+					eventId   : Events.Repository.Search.Failure,
+					message   : $"Failed to complete keyword search for search term: '{searchTerm}'.",
+					exception : exc
 				);
 				throw;
 			}
@@ -180,9 +180,9 @@ namespace funda.repository.fake
 			catch(Exception exc)
 			{
 				_logger.LogError(
-					eventId: Events.Repository.Search.Failure,
-					message: $"Failed to complete property search.",
-					exception: exc
+					eventId   : Events.Repository.Search.Failure,
+					message   : $"Failed to complete property search.",
+					exception : exc
 				);
 				throw;
 			}

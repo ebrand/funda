@@ -40,7 +40,12 @@ namespace funda.api
 
 			// ### These feed specific strategies into the above strategy factory (create, read, update, and delete)
 			var useFakeData = true;
-			if(bool.TryParse(Environment.GetEnvironmentVariable("USE_FAKE_DATA").ToLower(), out useFakeData) && useFakeData)
+			var useFakeDataFromEnv = Environment.GetEnvironmentVariable("FUNDA_USE_FAKE_DATA");
+
+			if(!string.IsNullOrEmpty(useFakeDataFromEnv))
+				bool.TryParse(useFakeDataFromEnv, out useFakeData);
+
+			if(useFakeData)
 			{
 				_siContainer.RegisterSingleton(typeof(IAsyncRepository<>), typeof(FakeAsyncRepository_Post));
 				_siContainer.RegisterSingleton(typeof(ICreateStrategy<>),  typeof(FakeCreateStrategy_NotImplemented<>));

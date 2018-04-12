@@ -9,7 +9,7 @@ namespace funda.cli
 		{
 			Console.WriteLine();
 			Console.WriteLine("Funda CLI");
-			Console.WriteLine("Version: {0}", Environment.GetEnvironmentVariable("CLI_VERSION"));
+			Console.WriteLine("Version: {0}", Environment.GetEnvironmentVariable("FUNDA_CLI_VERSION"));
 			Console.WriteLine();
 
 			while (true)

@@ -118,9 +118,9 @@ namespace funda.repository.mongo
 			catch(Exception exc)
 			{
 				_logger.LogError(
-					eventId: Events.Repository.Search.Failure,
-					message: $"Failed to complete keyword search for search term: '{searchTerm}'.",
-					exception: exc
+					eventId   : Events.Repository.Search.Failure,
+					message   : $"Failed to complete keyword search for search term: '{searchTerm}'.",
+					exception : exc
 				);
 				throw;
 			}
@@ -136,9 +136,9 @@ namespace funda.repository.mongo
 			catch(Exception exc)
 			{
 				_logger.LogError(
-					eventId: Events.Repository.Search.Failure,
-					message: $"Failed to complete property search.",
-					exception: exc
+					eventId   : Events.Repository.Search.Failure,
+					message   : $"Failed to complete property search.",
+					exception : exc
 				);
 				throw;
 			}

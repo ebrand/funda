@@ -50,14 +50,12 @@ namespace api.controllers
 		/// <param name="id">The identifier of the post to return.</param>
 		/// <param name="q">The search keyword to use in searching posts.</param>
 		/// <returns>A list of <see cref="Post"></see>s.</returns>
-		[HttpGet("{id:int?}")]
-		public async Task<IActionResult> ReadAsync(int id, string q = "")
+		[HttpGet("{id}")]
+		public async Task<IActionResult> ReadAsync(int id)
 		{
 			try
 			{
-				var result = (!string.IsNullOrEmpty(q))
-					? await _repos.KeywordSearchAsync(q)
-					: await _repos.ReadAsync(id);
+				var result = await _repos.ReadAsync(id);
 
 				if (result.Payload != null)
 					return Ok(result.Payload);

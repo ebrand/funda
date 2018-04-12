@@ -13,8 +13,8 @@ namespace funda.api.security
 		private const string AUTHORIZATION_TYPE = "Basic";
 		private const string ENCODING = "iso-8859-1";
 
-		private static readonly string USERNAME = Environment.GetEnvironmentVariable("API_USERNAME");
-		private static readonly string PASSWORD = Environment.GetEnvironmentVariable("API_PASSWORD");
+		private static readonly string USERNAME = Environment.GetEnvironmentVariable("FUNDA_API_USERNAME");
+		private static readonly string PASSWORD = Environment.GetEnvironmentVariable("FUNDA_API_PASSWORD");
 
 		public override void OnActionExecuting(ActionExecutingContext context)
 		{
